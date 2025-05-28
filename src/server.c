@@ -4698,7 +4698,8 @@ void echoCommand(client *c) {
 }
 
 void echoMinCommand(client *c) {
-    addReplyBulk(c, c->argv[1]);
+    sds result = sdscatfmt(sdsempty(), "%s_%s", c->argv[0]->ptr, c->argv[1]->ptr);
+    addReplyBulkSds(c, result);
 }
 
 void timeCommand(client *c) {
